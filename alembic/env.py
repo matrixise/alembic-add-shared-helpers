@@ -24,6 +24,15 @@ target_metadata = None
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
 
+import sys
+import importlib
+import pathlib
+
+spec = importlib.util.spec_from_file_location('helpers', pathlib.Path.cwd() / 'alembic' / 'helpers.py')
+module = importlib.util.module_from_spec(spec)
+sys.modules['my_helpers'] = module
+spec.loader.exec_module(module)
+
 
 def run_migrations_offline():
     """Run migrations in 'offline' mode.
